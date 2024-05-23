@@ -151,7 +151,7 @@ body {
 
 }
 
-.img-container {
+.img-container, .poster-movie {
     width: 13.9rem;
     height: 13.9rem;
 
@@ -159,6 +159,12 @@ body {
 
     box-shadow: 20px 20px 30px 0px #0000004D;
 }
+
+.poster-movie {
+    object-fit: cover;
+    box-shadow: none;
+}
+
 
 .container-movie {
     width: 26.8rem;

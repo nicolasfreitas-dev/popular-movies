@@ -1,28 +1,26 @@
+import { API } from "../services/api.js";
+
 const cardContainer = document.querySelector(".card-container");
 
-const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=47d6dc10e42efa4b24ea80a03fe59ca9&language=pt-br`;
-
-async function apiResult() {
-    const fetchResponse = await fetch(url)
-        .then((response) => response.json())
-        .catch((error) => console.error(error));
-    
-    return fetchResponse;
+async function getAllPopularMovies() {
+    const movies = await API.getPopularMovies()
+    movies.forEach(movie => {
+        renderMovies(movie)
+    })
 }
 
-async function getPopularMovies(){
-    const movies = apiResult();
-    movies.forEach((movie) => {
-        renderMovies(movie);
-    });
+window.onload = function() {
+    getAllPopularMovies()
 }
 
 function renderMovies(movie) {
-    const { id, title, poster_path, vote_average, release_date, overview } = movie;
+    const { title, poster_path, vote_average, release_date, overview } = movie;
+
+    const image = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
     cardContainer.innerHTML = `
     <div class="img-container">
-        <img src=${poster_path} alt="icone do filme">
+        <img class="poster-movie" src=${image} alt="foto de capa do filme">
     </div>
     <div class="container-movie">
         <h2 class="movie-title">${title} (${release_date})</h2>
@@ -40,5 +38,5 @@ function renderMovies(movie) {
     <div class="container-movie-desc">
         ${overview}
     </div>
-`;
+`
 }
