@@ -1,0 +1,26 @@
+  cardContainer.innerHTML = `
+    <div class="img-container">
+        <img class="poster-movie" src=${image} alt="foto de capa do filme">
+    </div>
+
+    <div class="container-movie">
+        <h2 class="movie-title">${title} (${year})</h2>
+
+        <div class="movie-icons">
+            <div class="icons-container">
+                <i class="fa-solid fa-star"></i>
+                <span>${vote_average}</span>
+            </div>
+            
+            <div class="icons-container">
+                <i class="fa-regular fa-heart"></i>
+                <span>Favoritar</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-movie-desc">
+        ${overview}
+    </div>
+`
