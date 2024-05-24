@@ -175,7 +175,6 @@ body {
     box-shadow: none;
 }
 
-
 .container-movie {
     width: 26.8rem;
     height: 13.9rem;
@@ -191,6 +190,10 @@ body {
 .container-movie .movie-title {
     font-size: 1.8rem;
     font-weight: 500;
+}
+
+.movie-title {
+    text-align: center;
 }
 
 .container-movie .movie-icons, .icons-container {

@@ -1,10 +1,34 @@
 import { API } from "../services/api.js";
 
 const container = document.querySelector(".movies");
+const inputSearch = document.querySelector("#header-search");
+
+async function searchMovies() {
+    const inputValue = inputSearch.value;
+    
+    clearMoviesContainer();
+
+    if (inputValue != "") {
+        const movies = await API.searchMovieByName(inputValue)
+        movies.forEach(movie => renderMovies(movie))
+    } else {
+        getAllPopularMovies();
+    }
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        searchMovies();
+    }
+});
 
 async function getAllPopularMovies() {
     const movies = await API.getPopularMovies()
     movies.forEach(movie => renderMovies(movie))
+}
+
+function clearMoviesContainer() {
+    container.innerHTML = "";
 }
 
 window.onload = function() {
@@ -45,7 +69,7 @@ function renderMovies(movie) {
     starIcon.classList.add("fa-solid");
     starIcon.classList.add("fa-star");
     const rating = document.createElement("span");
-    rating.textContent = vote_average;
+    rating.textContent = vote_average.toFixed(1);
 
     const favIconContainer = document.createElement("div");
     favIconContainer.classList.add("icons-container");

@@ -1,7 +1,7 @@
 import { apiKey } from "../env/key.js"
 
 async function searchMovieByName(title) {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=en-US&page=1`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=en-US&page=1`
 
     try {
         const response = await fetch(url);
@@ -12,7 +12,7 @@ async function searchMovieByName(title) {
         
         const data = await response.json();
 
-        return data;
+        return data.results;
     } catch (error) {
         console.error("Error fetching popular movies", error);
         return [];
@@ -31,7 +31,7 @@ async function getPopularMovies() {
         
         const data = await response.json();
 
-        return data.results;
+        return (data.results);
     } catch (error) {
         console.error("Error fetching popular movies", error);
         return [];
