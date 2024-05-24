@@ -22,6 +22,10 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+function movieFavorited(event, movie) {
+    
+}
+
 async function getAllPopularMovies() {
     const movies = await API.getPopularMovies()
     movies.forEach(movie => renderMovies(movie))
@@ -77,6 +81,8 @@ function renderMovies(movie) {
     const heartIcon = document.createElement("i");
     heartIcon.classList.add("fa-regular");
     heartIcon.classList.add("fa-heart");
+    heartIcon.addEventListener("click", (event) => movieFavorited(event, movie));
+    
     const favorite = document.createElement("span");
     favorite.textContent = "Favoritar";
 

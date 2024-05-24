@@ -43,7 +43,21 @@ body {
     margin: 20px 0px 20px 0px
 }
 
-#header-container input[type=search] {
+#input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 60rem;
+    height: 5rem;
+
+    background-color: #c8c5c5;
+
+    border: none;
+    border-radius: 8px;
+}
+
+#input-container input[type="text"] {
     width: 60rem;
     height: 5rem;
 
@@ -55,16 +69,24 @@ body {
     font-weight: 500;
     font-size: 1.8rem;
 
-    background-color: #8A8A8A;
-    color: #FFFFFF;
+    background-color: transparent;
+    color: #4c4b4b;
 }
 
-#header-container input[type="search"]::placeholder {
+#input-container span {
+    font-size: 1.6rem;
+
+    color: #4c4b4b;
+
+    margin-right: 20px;
+}
+
+#header-container input[type="text"]::placeholder {
     padding-left: 8px;
 
     font-size: 1.5rem;
 
-    color: #c8c5c5;
+    color: #787878;
 }
 
 .chk {
@@ -221,6 +243,7 @@ body {
 
 .icons-container .fa-heart {
     color: #BA0707;
+    cursor: pointer;
 }
 
 .container-movie-desc {
