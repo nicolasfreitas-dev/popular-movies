@@ -241,9 +241,14 @@ body {
     color: #D7A82F;
 }
 
-.icons-container .fa-heart {
-    color: #BA0707;
+.icons-container .favorite-image {
     cursor: pointer;
+    transition: all 0.3s;
+    width: 1.9rem;
+}
+
+.icons-container .favorite-image:hover {
+    transform: scale(1.1);
 }
 
 .container-movie-desc {

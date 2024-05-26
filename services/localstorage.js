@@ -11,3 +11,24 @@ function saveToLocalStorage (movie) {
     const moviesJSON = JSON.stringify(movies);
     localStorage.setItem(localStorageKey, moviesJSON);
 }
+
+function checkMovieIsFavorited (id) {
+    const movies = getFavoriteMovies() || [];
+    
+    return movies.find(movie => movie.id == id)
+}
+
+function removeFromLocalStorage (id) {
+    const movies = getFavoriteMovies() || [];
+    const findMovies = movies.find(movie => movie.id == id);
+    const newMovies = movies.filter(movie => movie.id != findMovies.id);
+
+    localStorage.setItem(localStorageKey, JSON.stringify(newMovies));
+}
+
+export const LocalStorage = {
+    getFavoriteMovies,
+    saveToLocalStorage,
+    checkMovieIsFavorited,
+    removeFromLocalStorage
+}

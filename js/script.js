@@ -1,12 +1,29 @@
 import { API } from "../services/api.js";
+import { LocalStorage } from "../services/localstorage.js";
 
 const container = document.querySelector(".movies");
 const inputSearch = document.querySelector("#header-search");
+const checkboxInput = document.querySelector("input[type='checkbox']");
+
+checkboxInput.addEventListener("change", verifyCheckboxStatus);
+
+function verifyCheckboxStatus() {
+    const isChecked = checkboxInput.checked;
+
+    cleanAllMovies();
+
+    if (isChecked) {
+        const movies = LocalStorage.getFavoriteMovies() || [];
+        movies.forEach(movie => renderMovies(movie));
+    } else {
+        getAllPopularMovies();
+    }
+}
 
 async function searchMovies() {
     const inputValue = inputSearch.value;
     
-    clearMoviesContainer();
+    cleanAllMovies();
 
     if (inputValue != "") {
         const movies = await API.searchMovieByName(inputValue)
@@ -22,8 +39,23 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+function cleanAllMovies() {
+    container.innerHTML = "";
+}
+
 function movieFavorited(event, movie) {
-    
+   const favoriteState = {
+    favorited: "assets/heart-fill.svg",
+    notFavorited: "assets/heart.svg"
+   };
+
+   if (event.target.src.includes(favoriteState.notFavorited)) {
+        event.target.src = favoriteState.favorited
+        LocalStorage.saveToLocalStorage(movie)
+   } else {
+        event.target.src = favoriteState.notFavorited
+        LocalStorage.removeFromLocalStorage(movie.id)
+   }
 }
 
 async function getAllPopularMovies() {
@@ -31,17 +63,14 @@ async function getAllPopularMovies() {
     movies.forEach(movie => renderMovies(movie))
 }
 
-function clearMoviesContainer() {
-    container.innerHTML = "";
-}
-
 window.onload = function() {
     getAllPopularMovies()
 }
 
 function renderMovies(movie) {
-    const { title, poster_path, vote_average, release_date, overview } = movie;
+    const { id, title, poster_path, vote_average, release_date, overview } = movie;
 
+    const isFavorited = LocalStorage.checkMovieIsFavorited(id);
     const year = new Date(release_date).getFullYear();
     const image = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
@@ -78,13 +107,15 @@ function renderMovies(movie) {
     const favIconContainer = document.createElement("div");
     favIconContainer.classList.add("icons-container");
 
-    const heartIcon = document.createElement("i");
-    heartIcon.classList.add("fa-regular");
-    heartIcon.classList.add("fa-heart");
+    const heartIcon = document.createElement("img");
+    heartIcon.src = isFavorited ? "assets/heart.svg" : "assets/heart-fill.svg";
+    heartIcon.alt = "heart";
+    heartIcon.classList.add("favorite-image");
+
     heartIcon.addEventListener("click", (event) => movieFavorited(event, movie));
     
-    const favorite = document.createElement("span");
-    favorite.textContent = "Favoritar";
+    const favoriteText = document.createElement("span");
+    favoriteText.textContent = "Favoritar";
 
     const movieDescriptionContainer = document.createElement("div");
     movieDescriptionContainer.classList.add("container-movie-desc");
@@ -101,7 +132,7 @@ function renderMovies(movie) {
     
     movieIcons.appendChild(favIconContainer);
     favIconContainer.appendChild(heartIcon);
-    favIconContainer.appendChild(favorite);
+    favIconContainer.appendChild(favoriteText);
 
     movieCard.appendChild(imageContainer);
     movieCard.appendChild(movieContainer);
