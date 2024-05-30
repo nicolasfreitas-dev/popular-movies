@@ -4,7 +4,7 @@ function getFavoriteMovies () {
     return JSON.parse(localStorage.getItem(localStorageKey));
 }
 
-function saveToLocalStorage (movie) {
+function saveToLocalStorage(movie) {
     const movies = getFavoriteMovies() || [];
     movies.push(movie);
     
@@ -12,17 +12,17 @@ function saveToLocalStorage (movie) {
     localStorage.setItem(localStorageKey, moviesJSON);
 }
 
-function checkMovieIsFavorited (id) {
+function checkMovieIsFavorited(id) {
     const movies = getFavoriteMovies() || [];
-    
+
     return movies.find(movie => movie.id == id)
 }
 
-function removeFromLocalStorage (id) {
+function removeFromLocalStorage(id) {
     const movies = getFavoriteMovies() || [];
     const findMovies = movies.find(movie => movie.id == id);
     const newMovies = movies.filter(movie => movie.id != findMovies.id);
-
+    
     localStorage.setItem(localStorageKey, JSON.stringify(newMovies));
 }
 

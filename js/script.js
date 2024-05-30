@@ -45,16 +45,18 @@ function cleanAllMovies() {
 
 function movieFavorited(event, movie) {
    const favoriteState = {
-    favorited: "assets/heart-fill.svg",
-    notFavorited: "assets/heart.svg"
+    favorited: "assets/heart-full.svg",
+    notFavorited: "assets/heart-empty.svg"
    };
 
    if (event.target.src.includes(favoriteState.notFavorited)) {
         event.target.src = favoriteState.favorited
-        LocalStorage.saveToLocalStorage(movie)
+        
+        return LocalStorage.saveToLocalStorage(movie)
    } else {
         event.target.src = favoriteState.notFavorited
-        LocalStorage.removeFromLocalStorage(movie.id)
+
+        return LocalStorage.removeFromLocalStorage(movie.id)
    }
 }
 
@@ -108,7 +110,7 @@ function renderMovies(movie) {
     favIconContainer.classList.add("icons-container");
 
     const heartIcon = document.createElement("img");
-    heartIcon.src = isFavorited ? "assets/heart.svg" : "assets/heart-fill.svg";
+    heartIcon.src = isFavorited ? "assets/heart-full.svg" : "assets/heart-empty.svg";
     heartIcon.alt = "heart";
     heartIcon.classList.add("favorite-image");
 
